@@ -1,0 +1,18 @@
+{
+    // all of this is not really needed but it's good
+    // to provide informations to your translators
+    "": "Project-Id-Version: gettext-example\n" +
+        "Report-Msgid-Bugs-To: \n" +
+        "PO-Revision-Date: 2011-11-29\n" +
+        "Last-Translator: Julien Wajsberg <julien.wajsberg@orange.com>\n" +
+        "Language-Team: France Telecom\n" +
+        "MIME-Version: 1.0\n" +
+        "Content-Type: text/plain; charset=UTF-8\n" +
+        "Content-Transfer-Encoding: 8bit\n" +
+        "Plural-Forms: nplurals=2; plural=n != 1;",
+
+    // the translations
+    "$$text1$$": "This is a really good text.",
+    "$$text2$$": "This is an awesome text.",
+    "$$text3$$": "This text is very bad, very naughty."
+}

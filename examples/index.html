@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang='en'>
+	<head>
+		<title>Example for gettext</title>
+		
+		<link rel='gettext' lang='en' href='translations/en.json' />
+		<link rel='gettext' lang='fr' href='translations/fr.json' />
+		<link rel='gettext' lang='es' href='translations/es.json' />
+	</head>
+<body>
+	<p><a href='index.fr.html'>The very same file in french</a></p>
+	<button id='text1'>Show text 1</button>
+	<button id='text2'>Show text 2</button>
+	<button id='text3'>Show text 3</button>
+
+<script src='../lib.gettext.js'></script>
+<script>
+<!--
+var translations = {
+	text1: "$$text1$$",
+	text2: "$$text2$$",
+	text3: "$$text3$$"
+};
+
+gt.init({
+	async: true,
+	callback: onTranslationsLoaded
+});
+
+// it should be faster if we use the gettext object from the parameter
+function onTranslationsLoaded(gt) {
+	gt._o(translations);
+}
+
+function init() {
+	document.body.onclick = function(e) {
+		e = e || window.event;
+		var target = e.target;
+		if (target.tagName.toLowerCase() == 'button') {
+			var id = target.id;
+			var p = document.createElement("p");
+			p.appendChild(document.createTextNode(translations[id]));
+			document.body.appendChild(p);
+		}
+	};
+}
+
+window.onload = init;
+// -->
+</script>
+</body>
+</html>
