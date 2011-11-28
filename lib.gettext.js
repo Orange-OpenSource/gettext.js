@@ -1,14 +1,24 @@
+/*!
+ * Copyright 2011 France Télécom
+ * This software is distributed under the terms of either the GNU Lesser
+ * General Public License (GPL) Version 2 or later.
+ * See GPL-LICENSE.txt and LGPL-LICENSE.txt.
+ */
+ 
 /**
- * implémentation libre de gettext
+ * gettext.js
+ * version : 1
  * 
- * ce code est inspiré du plugin jQuery gettext (GPL) (notamment le format des
- * traductions), mais rien n'a été copié.
+ * This module is inspired of the GPL jquery plugin gettext, especially
+ * the translations format, but nothing has been copied.
  * 
- * du code de l'implémentation située à http://freshmeat.net/projects/jsgettext (LGPL)
- * a en revanche été copié (fonction "createPluralFunc"), ce qui rend cette
- * implémentation aussi LGPL.
+ * However, some source code from the LGPL library jsgettext
+ * (http://freshmeat.net/projects/jsgettext) has been copied (the
+ * function "createPluralFunc") so this implementation is also LGPL.
  * 
- * liste des formats pour les plural-forms ici :
+ * If you need some help to define the plural-forms, you can find it
+ * on the GNU gettext library manual:
+ * 
  * http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
  */ 
 
@@ -18,7 +28,7 @@ var gt = (function() {
 	var currentLocale;
 	var opts = {}, directory = {}, pluralFunc = utils.noop;
 	
-	var createXhrObject = function(){
+	function createXhrObject() {
 		
 	    if (window.XMLHttpRequest) {
 	        return new XMLHttpRequest();
@@ -31,28 +41,28 @@ var gt = (function() {
 	    }
 	
 	    return null;
-	};
+	}
 	
-	var loadData = function(url, method, callback){
+	function loadData(url, method, callback) {
 		
 		var responseData, xhr;
 		if( !( xhr = createXhrObject() ) ) {
 		    return;
 		}
 		
-		var xhrStatusChange = function() {
+		function xhrStatusChange() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 
-				// TODO voir pkoi JSON.parse marche pas
+				// TODO to be able to use JSON.parse we must clean the JSON first
 				// responseData = JSON.parse( xhr.responseText ) ;
 				responseData = eval( '(' + xhr.responseText  + ')') ;
 				callback && callback(responseData);
 				opts.callback && opts.callback();
 				callListeners();
 			}
-		};
+		}
 		
-		xhr.open(method, url, false);
+		xhr.open(method, url, !!opts.async);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader("Accept", "application/json");
 		
@@ -64,42 +74,52 @@ var gt = (function() {
 		
 		if (!opts.async) {
 			xhrStatusChange();
-		}
-		
-	};
+		}	
+	}
 	
+	function getGettextTranslationUrl(lang) {
+		// the selector could be "link[rel=gettext][lang=" + lang + "]"
+		// but for IE we have to use good ol' DOM
+		
+		var links = document.getElementsByTagName("link");
+		for (var i = 0, l = links.length; i < l; i++) {   
+			var link = links[i];
+			if (link.getAttribute("rel") == "gettext" && link.getAttribute("lang") == lang) {
+				return link.getAttribute("href");
+			}
+		}
+		// return undefined;
+	}
+
 	/**
-	 * initialise le moteur gettext
+	 * This initialize the gettext enfine
 	 * 
-	 * opts peut contenir les champs suivants :
-	 * - async : false par défaut; si true, exécute la requête XHR de manière asynchrone.
-	 *      en asynchrone, il y a un risque de demander une traduction avant que ce soit
-	 *      initialisé. On peut utiliser la callback dans ce cas.
-	 * - callback : est appelée lorsque le chargement est terminé. Surtout utile en
-	 *      asynchrone. 
-	 * - createShortcuts : false par défaut; permet de créer les raccourcis globaux "_",
-	 *      "_n" et "strfmt" vers respectivement "gettext", "ngettext" et "strfmt" 
+	 * the parameter _opts can have the following optional fields :
+	 * - async: false by default; if this is true, the XHR request to get
+	 * the translation is done in asynchronous mode. Using this mode,
+	 * there is a possibility that the first translation request are
+	 * not initialized. You can use the "callback" parameter or init
+	 * listeners (see addInitListener method) to use async mode.
+	 * - callback: this is called when loading is done. Especially
+	 * useful in async mode.
+	 * - createShorcuts: false by default; this creates the global
+	 * shortcuts "_", "_n", "_o" and "strfmt".
 	 */
 	function init(_opts) {
 		opts = _opts || {};
 		if (opts.createShortcuts) {
-			window._ = gettext;
+			window._ = gettext_string;
+			window._o = gettext_object;
 			window._n = ngettext;
 			window.strfmt = strfmt;
 		}
 		
 		var html = document.documentElement;
-		var lang = html.getAttribute("lang");
-		
-		//var link = document.querySelector("link[rel=gettext][lang=" + lang + "]");
-		// we use jQuery for IE
-		var link = $("link[rel=gettext][lang=" + lang + "]");
-		if (link.length) {
-			link = link.get(0);
-			var url = link.getAttribute("href");
+		currentLocale = html.getAttribute("lang");
+		var url = getGettextTranslationUrl(currentLocale);
+		if (url) {
 			loadData(url, "GET", initTranslation);
 		}
-		currentLocale = lang;
 	}
 	
 	function getCurrentLocale() {
@@ -170,12 +190,12 @@ var gt = (function() {
 	}
 	
 	/**
-	 * prend en paramètre un objet
-	 * Cette méthode va itérer sur cet objet et remplacer les valeurs
-	 * par l'appel de gettext sur cette valeur.
+	 * takes an object as parameter.
+	 * This function iterates on this object and replaces each value
+	 * by the return of the gettext function applied on this value.
 	 * 
-	 * Cette méthode modifie donc l'objet passé en paramètre.
-	 * Elle retourne ensuite aussi cet objet.
+	 * So take care because this function modifies the object.
+	 * It also returns this object.
 	 */
 	function gettext_object(obj) {
 		for (var key in obj) {
@@ -207,14 +227,21 @@ var gt = (function() {
 	
 	var fmt_re = /{(\d+)}/g;
 	/**
-	 * prend en argument un format + des arguments
-	 * le format contient des paramètres ordonnés, du genre {0} {1}.
+	 * takes as argument a pattern and some arguments.
+	 * The pattern contains some ordered parameters like {0} {1}.
 	 * 
-	 * Exemple :
-	 * strfmt("{0} moutons sont dans {1}", 5, "la bergerie");
+	 * Example :
 	 * 
-	 * Pour traduire, ça permet de faire des trucs comme ça :
-	 * strfmt("Un mouton est dans {1}, 5, "la bergerie");
+	 * strfmt("{0} sheeps are in {1}", 5, "the sheepfold");
+	 * 
+	 * This is very useful for plural forms, for example we can
+	 * also use it like that :
+	 * 
+	 * strfmt("One sheep is in {1}", 5, "la bergerie");
+	 * 
+	 * Please note that the first parameter is silently discarded, so
+	 * that you can use the very same command and only change the
+	 * pattern.
 	 */
 	function strfmt(fmt) {
 		var args = Array.prototype.slice.call(arguments, 1);
@@ -234,6 +261,12 @@ var gt = (function() {
 		listeners = undefined;
 	}
 	
+	/**
+	 * The function "func" will get called when the translation
+	 * is loaded.
+	 * 
+	 * This function will have the gettext object as parameter
+	 */
 	function addInitListener(func) {
 		if (listenersCalled) {
 			func(gt);
