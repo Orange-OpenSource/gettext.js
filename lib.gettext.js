@@ -20,13 +20,16 @@
  * on the GNU gettext library manual:
  * 
  * http://www.gnu.org/software/gettext/manual/gettext.html#Plural-forms
+ * 
+ * Note: the loading of translations doesn't work in Chrome for local
+ * URLs (ie file: URLs).
  */ 
 
 (function(window, document) {
 /*jshint evil: true */
 var gt = (function() {
 	var currentLocale;
-	var opts = {}, directory = {}, pluralFunc = utils.noop;
+	var opts = {}, directory = {}, pluralFunc = function(){};
 	
 	function createXhrObject() {
 		
@@ -57,7 +60,7 @@ var gt = (function() {
 				// responseData = JSON.parse( xhr.responseText ) ;
 				responseData = eval( '(' + xhr.responseText  + ')') ;
 				callback && callback(responseData);
-				opts.callback && opts.callback();
+				opts.callback && opts.callback(gt);
 				callListeners();
 			}
 		}
@@ -258,7 +261,7 @@ var gt = (function() {
 		for (var i = listeners.length; i; i--) {
 			listeners[i - 1](gt);
 		}
-		listeners = undefined;
+		listeners = null;
 	}
 	
 	/**
@@ -269,6 +272,7 @@ var gt = (function() {
 	 */
 	function addInitListener(func) {
 		if (listenersCalled) {
+			// call func right now if we're already loaded
 			func(gt);
 			return;
 		}
