@@ -14,5 +14,9 @@
     // the translations
     "$$text1$$": "This is a really good text.",
     "$$text2$$": "This is an awesome text.",
-    "$$text3$$": "This text is very bad, very naughty."
+    "$$text3$$": "This text is very bad, very naughty.",
+    "$$sheeps-in-sheepfold$$": [
+		"One sheep is in the sheepfold.",
+		"{0} sheeps are in the sheepfold."
+	]
 }
