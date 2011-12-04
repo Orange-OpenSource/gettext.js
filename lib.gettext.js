@@ -167,16 +167,22 @@ var gt = (function() {
 	}
 	
 	function initTranslation(data) {
-		var header = data[""];
+		var i, l, index, cur, key, value;
+		var header = data[""],
+			headers = header.split('\n');
 		delete data[""];
 
 		directory = data;
-
-		header = header.split('\n').reduce(function(previous, line) {
-			var cur = line.split(':');
-			previous[cur[0]] = cur[1];
-			return previous;
-		}, {});
+		
+		// I'd love to use reduce or forEach if I needn't to support IE.
+		header = {};
+		for (i = 0, l = headers.length; i < l; i++) {
+			cur = headers[i];
+			index = cur.indexOf(':');
+			key = cur.substr(0, index);
+			value = cur.substr(index + 1);
+			header[key] = value;
+		}
 		
 		pluralFunc = createPluralFunc(header["Plural-Forms"]);
 	}
