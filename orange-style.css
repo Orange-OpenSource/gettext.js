@@ -1,0 +1,61 @@
+#copyright {
+    font-size: 80%;
+}
+body {
+    font-family: 'Helvetiva Neue', Helvetica, Arial, sans-serif;
+}
+h1 {
+    font-size: 1.5em;
+    color: black;
+    font-weight: normal;
+}
+
+h1 img {
+    vertical-align: text-bottom;
+    margin: 0 .5em;
+}
+
+h1 a {
+    text-decoration: none;
+}
+h1 span {
+    color: #ff5500;
+}
+h2 {
+    font-size: 1.4em;
+    font-weight: normal;
+}
+
+/* this part was taken from http://unindented.org/articles/2009/10/github-ribbon-using-css-transforms/
+ * but made 2012-ish */
+.ribbon {
+  background-color: #ff6600; /* hsl(24,100,100) */
+  background-image: -linear-gradient(linear, left top, left bottom, from(hsl(24,100%,60%)), to(hsl(24,100%,40%)));
+  background-image: -webkit-linear-gradient(top, hsl(24,100%,60%), hsl(24,100%,40%));
+  background-image: -o-linear-gradient(top, hsl(24,100%,60%), hsl(24,100%,40%));
+  background-image: -moz-linear-gradient(top, hsl(24,100%,60%), hsl(24,100%,40%));
+  background-image: linear-gradient(to bottom, hsl(24,100%,60%), hsl(24,100%,40%));
+  overflow: hidden;
+    position: absolute;
+  right: -3em;
+  top: 2.5em;
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+    -moz-box-shadow: 0 0 1em #888;
+  -webkit-box-shadow: 0 0 1em #888;
+  box-shadow: 0 0 1em #888;
+}
+.ribbon a {
+  border: 1px solid #ffc0aa;
+  color: #fff;
+  display: block;
+  font: bold 81.25% 'Helvetiva Neue', Helvetica, Arial, sans-serif;
+  margin: 0.05em 0;
+  padding: 0.5em 3.5em;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 0 0 0.5em #444;
+}
