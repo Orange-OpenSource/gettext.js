@@ -131,7 +131,7 @@ var gt = (function() {
 	
     var pf_re = new RegExp('^\\s*nplurals\\s*=\\s*[0-9]+\\s*;\\s*plural\\s*=\\s*(?:\\s|[-\\?\\|&=!<>+*/%:;a-zA-Z0-9_\(\)])+');
 
-    // cette fonction (et juste elle) est fortement inspirée de
+    // this function (and only this function) is largely inspired from
 	// http://freshmeat.net/projects/jsgettext (LGPL)
 	function createPluralFunc(pluralFormCondition) {
 		var func;
