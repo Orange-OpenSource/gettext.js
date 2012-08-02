@@ -224,8 +224,8 @@ var gt = (function() {
 			return translated;
 		}
 
-		var plural = pluralFunc(n);
-		if (plural.plural > plural.nplural || translated.length < plural.plural) {
+		var plural = pluralFunc(n) || {};
+		if (plural.plural === undefined || plural.plural > plural.nplural || translated.length < plural.plural) {
 			plural.plural = 0;
 		}
 		
