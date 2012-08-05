@@ -26,6 +26,13 @@ h2 {
     font-weight: normal;
 }
 
+code {
+    border: 1px solid #777;
+    background-color: #eee;
+    border-radius: 4px;
+    padding: 2px;
+}
+
 /* this part was taken from http://unindented.org/articles/2009/10/github-ribbon-using-css-transforms/
  * but made 2012-ish */
 .ribbon {
