@@ -176,8 +176,25 @@ For example, do you know that Polish has 3 forms ?
 Here is how to use this support :
 * first, you must have a correct `Plural-Forms` line in your language
 file. The [gettext manual page about plural forms](http://www.gnu.org/software/gettext/manual/html_node/Plural-forms.html)
-gathers lots of `Plural-Forms` examples you can just copy and paste.
+gathers lots of `Plural-Forms` examples you can just copy and paste. Another
+reference can be found on [the Translate Toolkit & Pootle Website](http://translate.sourceforge.net/wiki/l10n/pluralforms).
 * then, when you want a key with plural forms, you must use a normal
 JavaScript array as a value, with as many elements as there are forms
 for this language (as in the `$$sheeps-in-sheepfold$$` key above).
 * and at last, use the `ngettext` method as described before.
+
+Some alternatives
+----
+There are very good alternatives to this library:
+* [Jed](http://slexaxton.github.com/Jed/) has similar features than
+`gettext.js`. It uses a quite different syntax and uses a grammar to parse
+the Plural Forms line (whereas `gettext.js` uses `eval` which we plan
+to change eventually).
+* [MessageFormat](https://github.com/SlexAxton/messageformat.js) by the same author.
+This is an implementation of [Java's MessageFormat](http://docs.oracle.com/javase/6/docs/api/java/text/MessageFormat.html).
+This is both more complicated and more featureful than `gettext.js` and `Jed`.
+* [jsgettext](https://github.com/fwg/jsgettext) is quite old but is a quite
+comprehensive port of the original GNU Gettext library. `gettext.js` uses
+`jsgettext` parsing for Plural-Forms and that's why we use LGPL for now.
+We also use the same format for our data files. Basically this library
+inspired `gettext.js` a lot so thanks to Joshua I. Miller for his work.
