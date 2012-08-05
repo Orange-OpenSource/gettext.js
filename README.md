@@ -132,7 +132,8 @@ make your file more readable, and you can use comments.
 Here are the basic rules to follow :
 * Each key to translate is a key in the JavaScript object.
 * You must have an empty key. This empty key has several lines which are
-only informational except the line defining the plural forms (see below).
+only informational except the line defining the plural forms.
+YOu can either use a concatened string with new lined or an object (see below).
 * Plural forms are specified using normal JavaScript arrays.
 
 ### Example
@@ -158,6 +159,26 @@ only informational except the line defining the plural forms (see below).
 		"One sheep is in the sheepfold.",
 		"{0} sheeps are in the sheepfold."
 	]
+}
+```
+
+The header can be specified using a normal JavaScript object as well :
+
+```javascript
+{
+    // all of this is not really needed but it's good
+    // to provide informations to your translators
+    "": {
+        "Project-Id-Version": "gettext-example",
+        "PO-Revision-Date": "2011-11-29",
+        "Last-Translator": "Julien Wajsberg <julien.wajsberg@orange.com>",
+        "Language-Team": "France Telecom",
+        "MIME-Version": "1.0",
+        "Content-Type": "text/plain; charset=UTF-8",
+        "Content-Transfer-Encoding": "8bit",
+        "Plural-Forms": "nplurals=2; plural=n > 1;"
+    },
+    ...
 }
 ```
 
