@@ -32,10 +32,10 @@ and the language file to load using the `link` with the appropriate
 `lang` attribute as well. Then it will load and parse the language file.
 
 The method takes an option parameter with the following possible options:
-* `async` (`false` by default). If `true`, the loading is
-asynchronous. The various listeners will be called when the library
-is ready. If `false`, the call blocks until the file is downloaded, parsed,
-and the library is ready.
+* `sync` (`false` by default). If `true`, the loading is
+synchronous: the call blocks until the file is downloaded, parsed,
+and the library is ready. Anyway, if this is `true` or `false`, the various
+listeners will be called when the library is ready. 
 * `callback` (empty by default). This function will be called when
 the loading finishes. See also `addInitListener` below.
 * `createShortcuts` (`false` by default). If `true`, the library will

@@ -65,17 +65,17 @@ var gt = (function() {
 			}
 		}
 		
-		xhr.open(method, url, !!opts.async);
+		xhr.open(method, url, !opts.sync);
 		xhr.setRequestHeader("Content-Type", "application/json");
 		xhr.setRequestHeader("Accept", "application/json");
 		
-		if (opts.async) {
+		if (!opts.sync) {
 			xhr.onreadystatechange = xhrStatusChange;
 		}
 		
 		xhr.send(null);
 		
-		if (!opts.async) {
+		if (opts.sync) {
 			xhrStatusChange();
 		}	
 	}
@@ -98,10 +98,10 @@ var gt = (function() {
 	 * This initialize the gettext enfine
 	 * 
 	 * the parameter _opts can have the following optional fields :
-	 * - async: false by default; if this is true, the XHR request to get
-	 * the translation is done in asynchronous mode. Using this mode,
-	 * there is a possibility that the first translation request are
-	 * not initialized. You can use the "callback" parameter or init
+	 * - sync: false by default; if this is true, the XHR request to get
+	 * the translation is done in synchronous mode. When you use the default
+     * asynchronous mode, there is a possibility that the first translation
+     * requests are not initialized. You can use the "callback" parameter or init
 	 * listeners (see addInitListener method) to use async mode.
 	 * - callback: this is called when loading is done. Especially
 	 * useful in async mode.
