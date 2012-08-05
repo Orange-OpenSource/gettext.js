@@ -15,6 +15,8 @@
  * However, some source code from the LGPL library jsgettext
  * (http://freshmeat.net/projects/jsgettext) has been copied (the
  * function "createPluralFunc") so this implementation is also LGPL.
+ * We'll eventually replace jsgettext's implementation with Jed's
+ * implementation and we'll be able to switch to MIT.
  * 
  * If you need some help to define the plural-forms, you can find it
  * on the GNU gettext library manual:
