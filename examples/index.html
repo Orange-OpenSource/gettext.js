@@ -1,18 +1,22 @@
 <!doctype html>
 <html lang='en'>
 	<head>
-		<title>Example for gettext</title>
+		<title>Example for gettext.js</title>
 		
+        <link rel='stylesheet' href='../orange-style.css' />
 		<link rel='gettext' lang='en' href='translations/en.json' />
 		<link rel='gettext' lang='fr' href='translations/fr.json' />
 		<link rel='gettext' lang='es' href='translations/es.json' />
 		<link rel='gettext' lang='pl' href='translations/pl.json' />
 	</head>
 <body>
+    <h1><a href='../index.html' title='back to home'><img src='../logo_orange.gif' title='Orange Logo' /> <span>gettext.js</span></a></h1>
+    <h2>Example</h2>
 	<p>This text is static, it must be translated using server-side
 	libraries.</p>
-	<p>The text that is shown by the buttons is dynamic, it is translated
-	using the gettext JS library.</p>
+	<p>The text that is displayed by the buttons is dynamic, it is translated
+	using the gettext JS library. This only works when the files are
+    on a server.</p>
 	<p>You can have a look to the very same file
 	<a href='index.fr.html' title='the very same file in french'>in french</a>,
 	<a href='index.es.html' title='the very same file in spanish'>in spanish</a> and
