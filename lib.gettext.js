@@ -1,6 +1,6 @@
 /*!
  * Copyright 2011 France Télécom
- * This software is distributed under the terms of either the GNU Lesser
+ * This software is distributed under the terms the GNU Lesser
  * General Public License (GPL) Version 2 or later.
  * See GPL-LICENSE.txt and LGPL-LICENSE.txt.
  */
@@ -167,23 +167,24 @@ var gt = (function() {
 	}
 	
 	function initTranslation(data) {
-		var i, l, index, cur, key, value;
-		var header = data[""],
-			headers = header.split('\n');
-		delete data[""];
+		var i, l, index, cur, key, value, headers;
+		var header = data[""];
+        directory = data;
 
-		directory = data;
-		
-		// I'd love to use reduce or forEach if I needn't to support IE.
-		header = {};
-		for (i = 0, l = headers.length; i < l; i++) {
-			cur = headers[i];
-			index = cur.indexOf(':');
-			key = cur.substr(0, index);
-			value = cur.substr(index + 1);
-			header[key] = value;
-		}
-		
+        if (typeof header === 'string') {
+			headers = header.split('\n');
+
+            // I'd love to use reduce or forEach if I needn't to support IE.
+            header = {};
+            for (i = 0, l = headers.length; i < l; i++) {
+                cur = headers[i];
+                index = cur.indexOf(':');
+                key = cur.substr(0, index);
+                value = cur.substr(index + 1);
+                header[key] = value;
+            }
+        }
+
 		pluralFunc = createPluralFunc(header["Plural-Forms"]);
 	}
 	
