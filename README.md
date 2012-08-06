@@ -214,6 +214,10 @@ to change eventually).
 * [MessageFormat](https://github.com/SlexAxton/messageformat.js) by the same author.
 This is an implementation of [Java's MessageFormat](http://docs.oracle.com/javase/6/docs/api/java/text/MessageFormat.html).
 This is both more complicated and more featureful than `gettext.js` and `Jed`.
+* [Mozilla B2G's localization library](https://github.com/fabi1cazenave/webL10n) is
+an attempt to get a simple l10n library for modern browsers. They're experimenting
+with a tentative standard API and they have [different goals](https://github.com/fabi1cazenave/webL10n/wiki/Language-Selection).
+As far as I know, they're only targeting modern browsers (I mean, no IE support).
 * [jsgettext](https://github.com/fwg/jsgettext) is quite old but is a quite
 comprehensive port of the original GNU Gettext library. `gettext.js` uses
 `jsgettext` parsing for Plural-Forms and that's why we use LGPL for now.
